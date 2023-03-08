@@ -13,7 +13,8 @@ import store from './store'
 // import './assets/css/theme/000/index.css';
 // import './assets/css/theme/FFB400/index.css';
 // import '../theme/theme-ffb400/index.css';
-
+import registerDirectives from '@/directives'; // 自定义指令
+registerDirectives(Vue);
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
