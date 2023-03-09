@@ -25,20 +25,35 @@
       <div class="imgPreview" >
         <img id="printMe" ref="imgPreviewId"  src="../assets/logo.png" alt />
       </div>
-      <!-- <div class="pdfPreview" v-if="pdfSrc">
+      <div class="buttons">
+        <el-button @click="closeDialog" class="my-menu">关闭</el-button>
+        <el-button class="my-menu" @click="translateFunc" >旋转</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      class="previewDialog"
+      title="预览"
+      :visible.sync="pdfDialogVisible"
+      width="400px"
+      :append-to-body="true"
+      :modal='false'
+      :close-on-click-modal='false'
+      v-draggable
+    >
+      <div class="pdfPreview" >
         <iframe
           id="printMe"
           ref="pdfIframe2"
-          :src="iframeSrc"
+          :src="pdfSrc"
           allowfullscreen="true"
           frameborder="0"
           :style="{width:'100%',height:pageHt+'px'}"
         ></iframe>
-      </div> -->
+      </div>
       <div class="buttons">
-        <el-button @click="closeDialog" class="my-menu">关闭</el-button>
-        <!-- <div class="my-menu" @click="pdfPrintAll" v-if="pdfSrc && isDown">打印</div> -->
-        <el-button class="my-menu" @click="translateFunc" >旋转</el-button>
+        <el-button @click="pdfDialogVisible=false" class="my-menu">关闭</el-button>
+        <div class="my-menu" @click="pdfPrintAll" v-if="pdfSrc">打印</div>
       </div>
     </el-dialog>
   </div>
@@ -57,7 +72,10 @@ export default {
     return {
       msg: "Welcome to Your Vue.js App",
       imgDialogVisible: false,
+      pdfDialogVisible: false,
       current: 0,
+      pageHt: window.innerHeight,
+      pdfSrc: '',
     };
   },
   mounted() {
@@ -96,7 +114,11 @@ export default {
       this.current += 90;
       this.current = this.current%360;
       this.$refs['imgPreviewId'].style.transform = 'rotate('+this.current+'deg)';
-    }
+    },
+    // 改成浏览器自带打印预览
+    pdfPrintAll() {
+      document.querySelectorAll('#printMe')[0].contentWindow.print()
+    },
   },
 };
 </script>
