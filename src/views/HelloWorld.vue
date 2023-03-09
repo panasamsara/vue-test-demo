@@ -56,17 +56,20 @@
         <div class="my-menu" @click="pdfPrintAll" v-if="pdfSrc">打印</div>
       </div>
     </el-dialog>
+
+    <!-- <DataCharts ref="DataCharts" :chartsType="activeName" :chartsData="chartsData" :loading="loading" :performanceValueType='performanceValueType'></DataCharts> -->
   </div>
 </template>
 
 <script>
-import { toggleClass } from "../utils/index.js";
+import util from "@/utils/index";
 import nxSkin from "@/components/nx-skin/index";
+import DataCharts from '@/components/echarts/dataCharts.vue';
 
 export default {
   name: "HelloWorld",
   components: {
-    nxSkin,
+    nxSkin, DataCharts
   },
   data() {
     return {
@@ -76,10 +79,14 @@ export default {
       current: 0,
       pageHt: window.innerHeight,
       pdfSrc: '',
+      activeName: 'line', // line-折线图   histogram-柱状图
+      chartsData: [],
+      loading: false,
+      performanceValueType: 0,
     };
   },
   mounted() {
-    toggleClass(document.body, "custom-" + this.themecolor);
+    util.toggleClass(document.body, "custom-" + this.themecolor);
     let curcolor = this.$store.state.themecolor;
     this.classH2 = "custome-" + curcolor;
   },
