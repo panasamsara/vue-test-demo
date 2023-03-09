@@ -5,12 +5,42 @@
     <div style="display: flex; justify-content: center; margin-bottom: 20px;">
       <nx-skin class="theme-switch right-menu-item"></nx-skin>
       <el-row>
-        <el-button type="primary">按钮1</el-button>
+        <el-button type="primary" @click="imgDialogVisible=true">图片</el-button>
       </el-row>
     </div>
     <div>
       <el-button type="primary" @click="goForm">Form页面</el-button>
     </div>
+
+    <el-dialog
+      class="previewDialog"
+      title="预览"
+      :visible.sync="imgDialogVisible"
+      width="400px"
+      :append-to-body="true"
+      :modal='false'
+      :close-on-click-modal='false'
+      v-draggable
+    >
+      <div class="imgPreview" >
+        <img id="printMe" ref="imgPreviewId"  src="../assets/logo.png" alt />
+      </div>
+      <!-- <div class="pdfPreview" v-if="pdfSrc">
+        <iframe
+          id="printMe"
+          ref="pdfIframe2"
+          :src="iframeSrc"
+          allowfullscreen="true"
+          frameborder="0"
+          :style="{width:'100%',height:pageHt+'px'}"
+        ></iframe>
+      </div> -->
+      <div class="buttons">
+        <el-button @click="closeDialog" class="my-menu">关闭</el-button>
+        <!-- <div class="my-menu" @click="pdfPrintAll" v-if="pdfSrc && isDown">打印</div> -->
+        <el-button class="my-menu" @click="translateFunc" >旋转</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -26,6 +56,8 @@ export default {
   data() {
     return {
       msg: "Welcome to Your Vue.js App",
+      imgDialogVisible: false,
+      current: 0,
     };
   },
   mounted() {
@@ -56,6 +88,15 @@ export default {
         name: 'FormDemo'
       })
     },
+    closeDialog(){
+      this.imgDialogVisible = false;
+    },
+    // 图片旋转
+    translateFunc(){
+      this.current += 90;
+      this.current = this.current%360;
+      this.$refs['imgPreviewId'].style.transform = 'rotate('+this.current+'deg)';
+    }
   },
 };
 </script>
@@ -77,4 +118,5 @@ li {
 a {
   color: #42b983;
 }
+
 </style>
