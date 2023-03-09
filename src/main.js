@@ -15,14 +15,18 @@ import store from './store'
 // import '../theme/theme-ffb400/index.css';
 import registerDirectives from '@/directives'; // 自定义指令
 registerDirectives(Vue);
+
 Vue.config.productionTip = false
 
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 
 Vue.use(ElementUI, {
   size: 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
 })
+
+import bus from './bus/bus';
+Vue.prototype.$bus = bus;
 
 /* eslint-disable no-new */
 new Vue({
