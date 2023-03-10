@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import valid from '@/utils/validate';
+import vueValid from 'vue_valid_test';
 
 export default {
   name: "HelloWorld",
@@ -64,7 +64,7 @@ export default {
     };
   },
   created(){
-    this.validate = valid;
+    this.validate = vueValid;
   },
   mounted() {
     
